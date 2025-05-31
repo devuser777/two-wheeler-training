@@ -1,0 +1,109 @@
+<div class="admin-container">
+  <h1>Admin Portal</h1>
+
+  <!-- Statistics Section -->
+  <div class="stats-section">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Training Statistics</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-value">{{trainingStats.pending}}</div>
+            <div class="stat-label">Pending</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">{{trainingStats.inProgress}}</div>
+            <div class="stat-label">In Progress</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">{{trainingStats.completed}}</div>
+            <div class="stat-label">Completed</div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Payment Statistics</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-value">{{paymentStats.pending}}</div>
+            <div class="stat-label">Pending</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">{{paymentStats.completed}}</div>
+            <div class="stat-label">Completed</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">₹{{paymentStats.totalAmount}}</div>
+            <div class="stat-label">Total Amount</div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Search Section -->
+  <mat-card class="search-section">
+    <mat-card-header>
+      <mat-card-title>User Search</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="search-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Search Term</mat-label>
+          <input matInput formControlName="searchTerm" placeholder="Enter search term">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Search By</mat-label>
+          <mat-select formControlName="searchType">
+            <mat-option value="name">Name</mat-option>
+            <mat-option value="email">Email</mat-option>
+            <mat-option value="phone">Phone</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="search-actions">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!searchForm.valid">
+            Search
+          </button>
+          <button mat-button type="button" (click)="clearSearch()">
+            Clear
+          </button>
+        </div>
+      </form>
+
+      <!-- Search Results -->
+      <div class="search-results" *ngIf="searchResults.length > 0">
+        <h3>Search Results</h3>
+        <mat-list>
+          <mat-list-item *ngFor="let user of searchResults">
+            <mat-icon matListItemIcon>person</mat-icon>
+            <div matListItemTitle>{{user.firstName}} {{user.lastName}}</div>
+            <div matListItemLine>{{user.email}} | {{user.phone}}</div>
+            <div matListItemMeta>
+              <mat-chip-listbox>
+                <mat-chip-option [color]="user.trainingStatus === 'completed' ? 'primary' : 'warn'" selected>
+                  {{user.trainingStatus}}
+                </mat-chip-option>
+                <mat-chip-option [color]="user.paymentStatus === 'completed' ? 'primary' : 'warn'" selected>
+                  {{user.paymentStatus}}
+                </mat-chip-option>
+              </mat-chip-listbox>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+
+      <div class="no-results" *ngIf="searchResults.length === 0 && searchForm.get('searchTerm')?.value">
+        No users found matching your search criteria.
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,71 @@
+<div class="dashboard-container">
+  <h1>Dashboard</h1>
+
+  <!-- Statistics Cards -->
+  <div class="stats-grid">
+    <mat-card class="stats-card">
+      <mat-card-content>
+        <div class="stat-value">{{stats.totalUsers}}</div>
+        <div class="stat-label">Total Users</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stats-card training">
+      <mat-card-content>
+        <div class="stat-value">{{stats.pendingTraining}}</div>
+        <div class="stat-label">Pending Training</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stats-card training">
+      <mat-card-content>
+        <div class="stat-value">{{stats.inProgressTraining}}</div>
+        <div class="stat-label">Training In Progress</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stats-card training">
+      <mat-card-content>
+        <div class="stat-value">{{stats.completedTraining}}</div>
+        <div class="stat-label">Completed Training</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stats-card payment">
+      <mat-card-content>
+        <div class="stat-value">{{stats.pendingPayments}}</div>
+        <div class="stat-label">Pending Payments</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stats-card payment">
+      <mat-card-content>
+        <div class="stat-value">{{stats.completedPayments}}</div>
+        <div class="stat-label">Completed Payments</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Recent Users -->
+  <mat-card class="recent-users">
+    <mat-card-header>
+      <mat-card-title>Recent Registrations</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let user of recentUsers">
+          <mat-icon matListItemIcon>person</mat-icon>
+          <div matListItemTitle>{{user.firstName}} {{user.lastName}}</div>
+          <div matListItemLine>{{user.email}}</div>
+          <div matListItemMeta>
+            <mat-chip-listbox>
+              <mat-chip-option [color]="user.trainingStatus === 'completed' ? 'primary' : 'warn'" selected>
+                {{user.trainingStatus}}
+              </mat-chip-option>
+            </mat-chip-listbox>
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>
